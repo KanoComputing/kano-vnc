@@ -1,0 +1,2 @@
+dotvnc/ etc/skel/.vnc
+vnc-toggle usr/bin

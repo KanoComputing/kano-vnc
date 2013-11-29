@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# A script for toggling the VNC server
+
+if [ -e ~/.vnc/kano\:1.pid ]; then
+    vncserver -kill ":1" >/dev/null 2>/dev/null
+    zenity --info --text="The VNC Server was disabled"
+    exit 0
+else
+    vncserver >/dev/null 2>/dev/null
+    zenity --info --text="The VNC Server was enabled"
+fi
