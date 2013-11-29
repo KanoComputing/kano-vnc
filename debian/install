@@ -1,4 +1,4 @@
 dotvnc/ etc/skel/.vnc
-vnc-toggle usr/bin
+kano-vnc usr/bin
 icon/Vnc usr/share/kano-desktop/extras
 icon/vnc.png usr/share/kano-desktop/icons
