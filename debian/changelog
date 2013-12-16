@@ -2,70 +2,70 @@ kano-vnc (1.0-2) unstable; urgency=low
 
   * Package rebuilt, updated to revision ac71d1cc.
 
- -- Team Kano <hello@kano.me>  Thu, 12 Dec 2013 02:26:39 +0000
+ -- Team Kano <dev@kano.me>  Thu, 12 Dec 2013 02:26:39 +0000
 
 kano-vnc (1.0-1) unstable; urgency=low
 
   * Bumped version
 
- -- Team Kano <hello@kano.me>  Mon, 09 Dec 2013 02:45:54 +0000
+ -- Team Kano <dev@kano.me>  Mon, 09 Dec 2013 02:45:54 +0000
 
 kano-vnc (0.1-10) unstable; urgency=low
 
   * Package rebuilt, updated to revision a5987b3e.
 
- -- Team Kano <hello@kano.me>  Mon, 09 Dec 2013 02:45:54 +0000
+ -- Team Kano <dev@kano.me>  Mon, 09 Dec 2013 02:45:54 +0000
 
 kano-vnc (0.1-9) unstable; urgency=low
 
   * Package rebuilt, updated to revision 41d3c989.
 
- -- Team Kano <hello@kano.me>  Sun, 08 Dec 2013 02:45:39 +0000
+ -- Team Kano <dev@kano.me>  Sun, 08 Dec 2013 02:45:39 +0000
 
 kano-vnc (0.1-8) unstable; urgency=low
 
   * Package rebuilt, updated to revision 703a98a7.
 
- -- Team Kano <hello@kano.me>  Sat, 07 Dec 2013 02:45:57 +0000
+ -- Team Kano <dev@kano.me>  Sat, 07 Dec 2013 02:45:57 +0000
 
 kano-vnc (0.1-7) unstable; urgency=low
 
   * Package rebuilt, updated to revision a8cd101d.
 
- -- Team Kano <hello@kano.me>  Thu, 05 Dec 2013 18:48:38 +0000
+ -- Team Kano <dev@kano.me>  Thu, 05 Dec 2013 18:48:38 +0000
 
 kano-vnc (0.1-6) unstable; urgency=low
 
   * Package rebuilt, updated to revision 18b6f7b9.
 
- -- Team Kano <hello@kano.me>  Wed, 04 Dec 2013 02:45:20 +0000
+ -- Team Kano <dev@kano.me>  Wed, 04 Dec 2013 02:45:20 +0000
 
 kano-vnc (0.1-5) unstable; urgency=low
 
   * Package rebuilt, updated to revision 1318142a.
 
- -- Team Kano <hello@kano.me>  Tue, 03 Dec 2013 22:33:34 +0000
+ -- Team Kano <dev@kano.me>  Tue, 03 Dec 2013 22:33:34 +0000
 
 kano-vnc (0.1-4) unstable; urgency=low
 
   * Package rebuilt, updated to revision 7da0e048.
 
- -- Team Kano <hello@kano.me>  Fri, 29 Nov 2013 22:20:46 +0000
+ -- Team Kano <dev@kano.me>  Fri, 29 Nov 2013 22:20:46 +0000
 
 kano-vnc (0.1-3) unstable; urgency=low
 
   * Package rebuilt, updated to revision df5d2e95.
 
- -- Team Kano <hello@kano.me>  Fri, 29 Nov 2013 16:05:36 +0000
+ -- Team Kano <dev@kano.me>  Fri, 29 Nov 2013 16:05:36 +0000
 
 kano-vnc (0.1-2) unstable; urgency=low
 
   * Package rebuilt, updated to revision 0a94aaa8.
 
- -- Team Kano <hello@kano.me>  Fri, 29 Nov 2013 15:19:32 +0000
+ -- Team Kano <dev@kano.me>  Fri, 29 Nov 2013 15:19:32 +0000
 
 kano-vnc (0.1-1) unstable; urgency=low
 
   * Initial release.
 
- -- Team Kano <hello@kano.me>  Fri, 29 Sep 2013 15:10:17 +0000
+ -- Team Kano <dev@kano.me>  Fri, 29 Sep 2013 15:10:17 +0000
