@@ -17,8 +17,8 @@ if [ -e ~/.vnc/kano\:1.pid ]; then
     rm -f ~/.vnc/passwd
 else
     # Ask for password
-    while true; do        
-	PASSWORD=`zenity --entry \
+    while true; do
+        PASSWORD=`zenity --entry \
             --text="Enter your password (6 to 8 characters):" \
             --entry-text "" \
             --hide-text`
@@ -28,13 +28,20 @@ else
             break;
         fi
     done
-    echo $PASSWORD
     # Create encrypted password file
-    vncpasswd -f <<< "$PASSWORD" > ~/.vnc/passwd
+    echo -e "$PASSWORD\n$PASSWORD" | vncpasswd -f  > ~/.vnc/passwd
+    # Set correct permissions (-rw-------)
+    chmod 0600 ~/.vnc/passwd
     # Enable the server
     vncserver -name "kano" >/dev/null 2>/dev/null
-    # Confirmation message
-    zenity --info --text="The VNC Server was enabled"
+    if [ -e ~/.vnc/kano\:1.pid ]; then
+        # Confirmation message
+        zenity --info --text="The VNC Server was enabled"
+    else
+        # Error message
+        zenity --error --text="Something went wrong"
+        exit 1
+    fi
 fi
 
 exit 0
