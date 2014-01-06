@@ -19,7 +19,7 @@ else
     # Ask for password
     while true; do
         PASSWORD=`zenity --entry \
-            --text="Enter your password (6 to 8 characters):" \
+            --text="Create a password (6 to 8 characters):" \
             --entry-text "" \
             --hide-text`
         if [ $? -eq 1 ]; then
