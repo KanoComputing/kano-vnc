@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# kano-vnc
+#
+# Copyright (C) 2013 Kano Computing Ltd.
+# License: http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+#
+# A script for toggling the VNC server
+#
+
+# Check if server already running
+if [ -e ~/.vnc/kano\:1.pid ]; then
+    # Disable the server
+    vncserver -kill ":1" >/dev/null 2>/dev/null
+    zenity --info --text="The VNC Server was disabled"
+    # Remove .vnc folder
+    rm -f ~/.vnc/passwd
+else
+    # Ask for password
+    while true; do
+        PASSWORD=`zenity --entry \
+            --text="Create a password (6 to 8 characters):" \
+            --entry-text "" \
+            --hide-text`
+        if [ $? -eq 1 ]; then
+            exit 1
+        elif [ ${#PASSWORD} -ge 6 ] && [ ${#PASSWORD} -le 8 ]; then
+            break;
+        fi
+    done
+    # Create encrypted password file
+    echo -e "$PASSWORD\n$PASSWORD" | vncpasswd -f  > ~/.vnc/passwd
+    # Set correct permissions (-rw-------)
+    chmod 0600 ~/.vnc/passwd
+    # Enable the server
+    vncserver -name "kano" >/dev/null 2>/dev/null
+    if [ -e ~/.vnc/kano\:1.pid ]; then
+        # Confirmation message
+        zenity --info --text="The VNC Server was enabled"
+    else
+        # Error message
+        zenity --error --text="Something went wrong"
+        exit 1
+    fi
+fi
+
+exit 0
