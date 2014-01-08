@@ -8,13 +8,21 @@
 # A script for toggling the VNC server
 #
 
+VNC_PATH=~/.vnc
+PASS_FILE=~/.vnc/passwd
+PID_FILE=~/.vnc/kano\:1.pid
+
+if [ ! -d "$VNC_PATH" ]; then
+    mkdir $VNC_PATH
+fi
+
 # Check if server already running
-if [ -e ~/.vnc/kano\:1.pid ]; then
+if [ -e $PID_FILE ]; then
     # Disable the server
     vncserver -kill ":1" >/dev/null 2>/dev/null
     zenity --info --text="The VNC Server was disabled"
     # Remove .vnc folder
-    rm -f ~/.vnc/passwd
+    rm -rf -- $VNC_PATH
 else
     # Ask for password
     while true; do
@@ -29,12 +37,12 @@ else
         fi
     done
     # Create encrypted password file
-    echo -e "$PASSWORD\n$PASSWORD" | vncpasswd -f  > ~/.vnc/passwd
+    echo -e "$PASSWORD\n$PASSWORD" | vncpasswd -f  > $PASS_FILE
     # Set correct permissions (-rw-------)
-    chmod 0600 ~/.vnc/passwd
+    chmod 0600 $PASS_FILE
     # Enable the server
     vncserver -name "kano" >/dev/null 2>/dev/null
-    if [ -e ~/.vnc/kano\:1.pid ]; then
+    if [ -e $PID_FILE ]; then
         # Confirmation message
         zenity --info --text="The VNC Server was enabled"
     else
