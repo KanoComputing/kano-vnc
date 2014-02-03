@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
 # kano-vnc
 #
-# Copyright (C) 2013 Kano Computing Ltd.
+# Copyright (C) 2014 Kano Computing Ltd.
 # License: http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
 #
 # A script for toggling the VNC server
@@ -37,7 +37,7 @@ else
         fi
     done
     # Create encrypted password file
-    echo -e "$PASSWORD\n$PASSWORD" | vncpasswd -f  > $PASS_FILE
+    echo "$PASSWORD\n$PASSWORD" | vncpasswd -f  > $PASS_FILE
     # Set correct permissions (-rw-------)
     chmod 0600 $PASS_FILE
     # Enable the server
