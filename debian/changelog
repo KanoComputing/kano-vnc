@@ -1,3 +1,9 @@
+kano-vnc (1.0-20) unstable; urgency=low
+
+  * Package rebuilt, updated to revision 4e322abf.
+
+ -- Team Kano <dev@kano.me>  Tue, 04 Feb 2014 02:17:09 +0000
+
 kano-vnc (1.0-19) unstable; urgency=low
 
   * Package rebuilt, updated to revision 7f4ea142.
