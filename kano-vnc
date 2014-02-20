@@ -44,10 +44,10 @@ else
     vncserver -name "kano" >/dev/null 2>/dev/null
     if [ -e $PID_FILE ]; then
         # Get Ethernet ip
-        IP=`ifconfig eth0 | grep inet | awk '{print $2}' | cut -d':' -f2`
+        IP=`/sbin/ifconfig eth0 | grep inet | awk '{print $2}' | cut -d':' -f2`
         # Get wlan0 IP if needed
         if [ -z $IP ]; then
-            IP=`ifconfig wlan0 | grep inet | awk '{print $2}' | cut -d':' -f2`
+            IP=`/sbin/ifconfig wlan0 | grep inet | awk '{print $2}' | cut -d':' -f2`
         fi
         # Confirmation message
         zenity --info --text="The VNC Server was enabled.\n\n IP:  $IP:1"
