@@ -24,6 +24,13 @@ if [ -e $PID_FILE ]; then
     # Remove .vnc folder
     rm -rf -- $VNC_PATH
 else
+    # Check for internet
+    /usr/bin/is_internet
+    if [ $? -ne 0 ]; then
+        # Show message
+        zenity --error --text="Make sure you have internet connection"
+        exit 1
+    fi
     # Ask for password
     while true; do
         PASSWORD=`zenity --entry \
