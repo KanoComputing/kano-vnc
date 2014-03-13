@@ -24,6 +24,13 @@ if [ -e $PID_FILE ]; then
     # Remove .vnc folder
     rm -rf -- $VNC_PATH
 else
+    # Check for internet
+    /usr/bin/is_internet
+    if [ $? -ne 0 ]; then
+        # Show message
+        zenity --error --text="Make sure you have internet connection"
+        exit 1
+    fi
     # Ask for password
     while true; do
         PASSWORD=`zenity --entry \
@@ -43,8 +50,14 @@ else
     # Enable the server
     vncserver -name "kano" >/dev/null 2>/dev/null
     if [ -e $PID_FILE ]; then
+        # Get Ethernet ip
+        IP=`/sbin/ifconfig eth0 | grep inet | awk '{print $2}' | cut -d':' -f2`
+        # Get wlan0 IP if needed
+        if [ -z $IP ]; then
+            IP=`/sbin/ifconfig wlan0 | grep inet | awk '{print $2}' | cut -d':' -f2`
+        fi
         # Confirmation message
-        zenity --info --text="The VNC Server was enabled"
+        zenity --info --text="The VNC Server was enabled.\n\n IP:  $IP:1"
     else
         # Error message
         zenity --error --text="Something went wrong"
