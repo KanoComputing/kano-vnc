@@ -1,0 +1,23 @@
+#!/bin/sh
+
+VNC_PATH=$HOME/.vnc/
+VNC_PASS=$VNC_PATH/passwd
+xpid=`pidof Xtightvnc`
+
+if [ "$xpid" != "" ]; then
+   # VNC Server is running, goodbye
+   exit 1
+else
+   # start vncserver
+   set +e
+   if [ -e $VNC_PASS ]; then
+     # Kill
+     pkill Xtightvnc
+     rm -f $VNC_PATH/kano\:1.pid
+     rm -f $VNC_PATH/kano\:1.log
+     set -e
+     /usr/bin/vncserver -name "kano" :1
+   fi
+fi
+
+exit 0

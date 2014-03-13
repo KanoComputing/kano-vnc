@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# postinst
+#
+# Copyright (C) 2014 Kano Computing Ltd.
+# License: http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+#
+
+case "$1" in
+    configure)
+        # Remove startvnc (in case it exists)
+        sed -i '/startvnc/d' /etc/xdg/lxsession/LXDE/autostart
+        # Add startvnc to autostart
+        echo "@/usr/share/kano-vnc/startvnc"
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0
