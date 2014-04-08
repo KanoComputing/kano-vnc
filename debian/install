@@ -1,5 +1,5 @@
 kano-vnc /usr/bin
 startvnc /usr/share/kano-vnc
 
-icon/Vnc /usr/share/kano-desktop/extras
-icon/vnc.png /usr/share/kano-desktop/icons
+icon/Vnc /usr/share/kano-extras/extras
+icon/vnc.png /usr/share/kano-extras/icons
