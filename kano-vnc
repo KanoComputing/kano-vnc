@@ -16,6 +16,7 @@ if [ ! -d "$VNC_PATH" ]; then
     mkdir $VNC_PATH
 fi
 
+# kano-profile stat collection
 kano-profile-cli increment_app_state_variable vnc starts 1
 
 # Check if server already running
