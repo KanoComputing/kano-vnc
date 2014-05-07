@@ -16,6 +16,8 @@ if [ ! -d "$VNC_PATH" ]; then
     mkdir $VNC_PATH
 fi
 
+kano-profile-cli increment_app_state_variable vnc starts 1
+
 # Check if server already running
 if [ -e $PID_FILE ]; then
     # Disable the server
