@@ -7,7 +7,7 @@ Build-Depends: debhelper (>=9.0.0)
 
 Package: kano-vnc
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, tightvncserver, kano-desktop, zenity, \
-    kano-profile
+Depends: ${shlibs:Depends}, ${misc:Depends}, tightvncserver, kano-desktop, zenity
+Suggests: kano-profile
 Description: Simple VNC server wrapper
  Allows really simple toggling of the tightvncserver.
