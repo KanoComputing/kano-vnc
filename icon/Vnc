@@ -6,4 +6,5 @@ Name[en_GB]=Toggle VNC
 Icon=/usr/share/kano-apps/icons/vnc.png
 Exec=/usr/bin/kano-vnc
 Comment[en_GB]=Connect remotely through VNC
+Categories=Extras;
 StartupNotify=true
