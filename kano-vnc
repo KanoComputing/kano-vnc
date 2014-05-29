@@ -11,6 +11,7 @@
 VNC_PATH=~/.vnc
 PASS_FILE=~/.vnc/passwd
 PID_FILE=~/.vnc/kano\:1.pid
+DIALOG_FILE=~/usr/lib/python2.7/dist-packages/kano/gtk3/kano_dialog.py
 
 if [ ! -d "$VNC_PATH" ]; then
     mkdir $VNC_PATH
@@ -62,10 +63,10 @@ else
             IP=`/sbin/ifconfig wlan0 | grep inet | awk '{print $2}' | cut -d':' -f2`
         fi
         # Confirmation message
-        zenity --info --text="The VNC Server was enabled.\n\n IP:  $IP:1"
+        python $DIALOG_FILE "The VNC Server was enabled" "IP: $IP:1"
     else
         # Error message
-        zenity --error --text="Something went wrong"
+        python $DIALOG_FILE "Something went wrong"
         exit 1
     fi
 fi
