@@ -11,7 +11,7 @@
 VNC_PATH=~/.vnc
 PASS_FILE=~/.vnc/passwd
 PID_FILE=~/.vnc/kano\:1.pid
-DIALOG_FILE=~/usr/lib/python2.7/dist-packages/kano/gtk3/kano_dialog.py
+DIALOG_FILE=/usr/lib/python2.7/dist-packages/kano/gtk3/kano_dialog.py
 
 if [ ! -d "$VNC_PATH" ]; then
     mkdir $VNC_PATH
