@@ -26,7 +26,7 @@ fi
 if [ -e $PID_FILE ]; then
     # Disable the server
     vncserver -kill ":1" >/dev/null 2>/dev/null
-    zenity --info --text="The VNC Server was disabled"
+    python $DIALOG_FILE "The VNC Server was disabled"
     # Remove .vnc folder
     rm -rf -- $VNC_PATH
 else
@@ -34,16 +34,14 @@ else
     /usr/bin/is_internet
     if [ $? -ne 0 ]; then
         # Show message
-        zenity --error --text="Make sure you have internet connection"
+        python $DIALOG_FILE "Error!" "Make sure you have internet connection"
         exit 1
     fi
     # Ask for password
     while true; do
-        PASSWORD=`zenity --entry \
-            --text="Create a password (6 to 8 characters):" \
-            --entry-text "" \
-            --hide-text`
-        if [ $? -eq 1 ]; then
+
+        PASSWORD=`python $DIALOG_FILE title:"Create a password (6 to 8 characters):" entry:hidden`
+        if [ $? -eq "" ]; then
             exit 1
         elif [ ${#PASSWORD} -ge 6 ] && [ ${#PASSWORD} -le 8 ]; then
             break;
@@ -66,7 +64,7 @@ else
         python $DIALOG_FILE "The VNC Server was enabled" "IP: $IP:1"
     else
         # Error message
-        python $DIALOG_FILE "Something went wrong"
+        python $DIALOG_FILE "Error!" "Something went wrong"
         exit 1
     fi
 fi
