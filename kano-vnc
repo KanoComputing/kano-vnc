@@ -40,7 +40,7 @@ else
     # Ask for password
     while true; do
 
-        PASSWORD=`python $DIALOG_FILE title="Create a password (6 to 8 characters)" entry=hidden`
+        PASSWORD=`python $DIALOG_FILE title="Create a password" description="Make it 6 to 8 characters long" entry=hidden`
         if [ $? = "" ]; then
             exit 1
         elif [ ${#PASSWORD} -ge 6 ] && [ ${#PASSWORD} -le 8 ]; then
