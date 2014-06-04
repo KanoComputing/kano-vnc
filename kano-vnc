@@ -11,7 +11,6 @@
 VNC_PATH=~/.vnc
 PASS_FILE=~/.vnc/passwd
 PID_FILE=~/.vnc/kano\:1.pid
-DIALOG_FILE=/usr/lib/python2.7/dist-packages/kano/gtk3/kano_dialog.py
 
 if [ ! -d "$VNC_PATH" ]; then
     mkdir $VNC_PATH
@@ -26,7 +25,7 @@ fi
 if [ -e $PID_FILE ]; then
     # Disable the server
     vncserver -kill ":1" >/dev/null 2>/dev/null
-    python $DIALOG_FILE title="The VNC Server was disabled"
+    kano-dialog title="The VNC Server was disabled"
     # Remove .vnc folder
     rm -rf -- $VNC_PATH
 else
@@ -34,13 +33,13 @@ else
     /usr/bin/is_internet
     if [ $? -ne 0 ]; then
         # Show message
-        python $DIALOG_FILE title="Error!" description="Make sure you have internet connection"
+        kano-dialog title="Error!" description="Make sure you have internet connection"
         exit 1
     fi
     # Ask for password
     while true; do
 
-        PASSWORD=`python $DIALOG_FILE title="Create a password" description="Make it 6 to 8 characters long" entry=hidden`
+        PASSWORD=`kano-dialog title="Create a password" description="Make it 6 to 8 characters long" entry=hidden`
         if [ $? = "" ]; then
             exit 1
         elif [ ${#PASSWORD} -ge 6 ] && [ ${#PASSWORD} -le 8 ]; then
@@ -61,10 +60,10 @@ else
             IP=`/sbin/ifconfig wlan0 | grep inet | awk '{print $2}' | cut -d':' -f2`
         fi
         # Confirmation message
-        python $DIALOG_FILE title="The VNC Server was enabled" description="IP is $IP:1"
+        kano-dialog title="The VNC Server was enabled" description="IP is $IP:1"
     else
         # Error message
-        python $DIALOG_FILE title="Error!" description="Something went wrong"
+        kano-dialog title="Error!" description="Something went wrong"
         exit 1
     fi
 fi
