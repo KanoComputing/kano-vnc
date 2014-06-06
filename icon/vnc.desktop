@@ -8,3 +8,4 @@ Exec=/usr/bin/kano-vnc
 Comment[en_GB]=Connect remotely through VNC
 Categories=Extras;
 StartupNotify=true
+Help=A brilliant tool used for years to control your computer from far away! Why not try it yourself? You’ll need a phone or tablet – an Android or iPhone or iPad. Download the VNC app on your device, then click here on your Kano to use your mobile as a display for your computer! \n 1. Connect your Kano and your tablet computer to the same wireless network \n 2. Click on the Toggle VNC app \n 3. A set of numbers will appear - this is your computer’s IP Address! Write it down as you’ll need it later. \n 4. Go to the App Store if using an iPad, or Google Play on an Android tablet. Search for and install ‘VNC Viewer’ \n\n For stuff like Toggle VNC, agree with Alej that a greater length tutorial (couple steps) will help, and let’s please link to the VNC Video which will open up in Kano-Video when clicked.
