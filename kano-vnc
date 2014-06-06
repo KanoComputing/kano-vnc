@@ -25,7 +25,7 @@ fi
 if [ -e $PID_FILE ]; then
     # Disable the server
     vncserver -kill ":1" >/dev/null 2>/dev/null
-    kano-dialog title="The VNC Server was disabled"
+    kano-dialog title='The VNC Server was disabled'
     # Remove .vnc folder
     rm -rf -- $VNC_PATH
 else
@@ -33,7 +33,7 @@ else
     /usr/bin/is_internet
     if [ $? -ne 0 ]; then
         # Show message
-        kano-dialog title="Error!" description="Make sure you have internet connection"
+        kano-dialog title='Error!' description='Make sure you have internet connection'
         exit 1
     fi
     # Ask for password
