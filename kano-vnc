@@ -39,7 +39,7 @@ else
     # Ask for password
     while true; do
 
-        PASSWORD=`kano-dialog title="Create a password" description="Make it 6 to 8 characters long" entry=hidden`
+        PASSWORD=`kano-dialog title='Create a password' description='Make it 6 to 8 characters long' entry=hidden`
         if [ $? = "" ]; then
             exit 1
         elif [ ${#PASSWORD} -ge 6 ] && [ ${#PASSWORD} -le 8 ]; then
@@ -60,10 +60,10 @@ else
             IP=`/sbin/ifconfig wlan0 | grep inet | awk '{print $2}' | cut -d':' -f2`
         fi
         # Confirmation message
-        kano-dialog title="The VNC Server was enabled" description="IP is $IP:1"
+        kano-dialog title='The VNC Server was enabled' description='IP is $IP:1'
     else
         # Error message
-        kano-dialog title="Error!" description="Something went wrong"
+        kano-dialog title='Error!' description='Something went wrong'
         exit 1
     fi
 fi
