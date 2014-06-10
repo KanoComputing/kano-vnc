@@ -39,7 +39,8 @@ else
     # Ask for password
     while true; do
 
-        PASSWORD=`kano-dialog title="Create a password" description="Make it 6 to 8 characters long" entry=hidden`
+        PASSWORD=$(kano-dialog title="Create a password" description="Make it 6 to 8 characters long" entry=hidden)
+        echo PASSWROD=$PASSWORD
         if [ $? = "" ]; then
             exit 1
         elif [ ${#PASSWORD} -ge 6 ] && [ ${#PASSWORD} -le 8 ]; then
