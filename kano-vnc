@@ -25,7 +25,7 @@ fi
 if [ -e $PID_FILE ]; then
     # Disable the server
     vncserver -kill ":1" >/dev/null 2>/dev/null
-    kano-dialog title="The VNC Server was disabled"
+    kano-dialog title='The VNC Server was disabled'
     # Remove .vnc folder
     rm -rf -- $VNC_PATH
 else
@@ -33,15 +33,15 @@ else
     /usr/bin/is_internet
     if [ $? -ne 0 ]; then
         # Show message
-        kano-dialog title="Error!" description="Make sure you have internet connection"
+        kano-dialog title='Error!' description='Make sure you have internet connection'
         exit 1
     fi
     # Ask for password
     while true; do
 
         PASSWORD=$(kano-dialog title="Create a password" description="Make it 6 to 8 characters long" entry=hidden)
-        echo PASSWROD=$PASSWORD
-        if [ $? = "" ]; then
+        # If the user doesn't enter a password, just exit
+        if [ "$PASSWORD" = "" ]; then
             exit 1
         elif [ ${#PASSWORD} -ge 6 ] && [ ${#PASSWORD} -le 8 ]; then
             break;
@@ -64,7 +64,7 @@ else
         kano-dialog title="The VNC Server was enabled" description="IP is $IP:1"
     else
         # Error message
-        kano-dialog title="Error!" description="Something went wrong"
+        kano-dialog title='Error!' description='Something went wrong'
         exit 1
     fi
 fi
