@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# startvnc
+# 
+# Copyright (C) 2014 Kano Computing Ltd.
+# License: http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+#
+#
+
 VNC_PATH=$HOME/.vnc/
 VNC_PASS=$VNC_PATH/passwd
 xpid=`pidof Xtightvnc`
