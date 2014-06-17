@@ -39,7 +39,9 @@ else
     # Ask for password
     while true; do
 
-        PASSWORD=$(kano-dialog title="Create a password" description="Make it 6 to 8 characters long" entry=hidden button=OK,color:green button=CANCEL,color:red)
+        PASSWORD=$(kano-dialog title="Create a password" description="Make it 6 to 8 characters long"\
+                   entry=hidden button=OK,color:green button=CANCEL,color:red\
+                   global_style=True)
         # If the user doesn't enter a password, just exit
         if [ "$PASSWORD" = "1" ]; then
             exit 1
