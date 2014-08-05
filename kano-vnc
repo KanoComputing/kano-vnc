@@ -28,6 +28,8 @@ if [ -e $PID_FILE ]; then
     kano-dialog title='The VNC Server was disabled'
     # Remove .vnc folder
     rm -rf -- $VNC_PATH
+    # Just in case kill Xtightserver
+    pkill Xtightvnc  >/dev/null 2>/dev/null
 else
     # Check for internet
     while true; do
