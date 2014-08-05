@@ -64,7 +64,7 @@ else
     # Set correct permissions (-rw-------)
     chmod 0600 $PASS_FILE
     # Enable the server
-    vncserver -name "kano" >/dev/null 2>/dev/null
+    vncserver -name "kano" ":1" >/dev/null 2>/dev/null
     if [ -e $PID_FILE ]; then
         # Get Ethernet ip
         IP=`/sbin/ifconfig eth0 | grep inet | awk '{print $2}' | cut -d':' -f2`
