@@ -30,15 +30,25 @@ if [ -e $PID_FILE ]; then
     rm -rf -- $VNC_PATH
 else
     # Check for internet
-    /usr/bin/is_internet
-    if [ $? -ne 0 ]; then
-        # Show message
-        kano-dialog title='Error!' description='Make sure you have internet connection'
-        exit 1
-    fi
+    while true; do
+        /usr/bin/is_internet
+        if [ $? -ne 0 ]; then
+            # Show message
+            kano-dialog title='This requires Internet connection' \
+                        description='Connect and continue, or do it later?' \
+                        buttons=LATER:orange:0,CONNECT:green:1
+            if [ $? -eq 0 ]; then
+                exit 1
+            else
+                rxvt -title \'WiFi\' -e sudo /usr/bin/kano-wifi
+            fi
+        else
+            break
+        fi
+    done
+
     # Ask for password
     while true; do
-
         PASSWORD=$(kano-dialog title="Create a password" description="Make it 6 to 8 characters long"\
                    entry=hidden button=OK,color:green button=CANCEL,color:red\
                    global_style=True)
@@ -64,6 +74,7 @@ else
         fi
         # Confirmation message
         kano-dialog title="The VNC Server was enabled" description="IP is $IP:1"
+        exit 0
     else
         # Error message
         kano-dialog title='Error!' description='Something went wrong'
