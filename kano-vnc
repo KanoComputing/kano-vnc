@@ -10,26 +10,29 @@
 
 VNC_PATH=~/.vnc
 PASS_FILE=~/.vnc/passwd
-PID_FILE=~/.vnc/kano\:1.pid
+VNC_DISPLAY=":0"
 
 if [ ! -d "$VNC_PATH" ]; then
     mkdir $VNC_PATH
 fi
 
-# kano-profile stat collection
-if [ -e /usr/bin/kano-profile-cli ]; then
-    kano-profile-cli increment_app_state_variable vnc starts 1
-fi
-
 # Check if server already running
-if [ -e $PID_FILE ]; then
+if [ "`pidof x11vnc`" != "" ]; then
+
+    # Stopping and disabling the VNC server, hourglass until we have told the user
+    python -c "from kdesk import hourglass; hourglass.hourglass_start('kano-dialog');"
+
+    # kano-profile stat collection
+    if [ -e /usr/bin/kano-profile-cli ]; then
+	kano-profile-cli increment_app_state_variable vnc starts 1
+    fi
+
     # Disable the server
-    vncserver -kill ":1" >/dev/null 2>/dev/null
+    pkill -9 x11vnc >/dev/null 2>&1
     kano-dialog title='The VNC Server was disabled'
+
     # Remove .vnc folder
     rm -rf -- $VNC_PATH
-    # Just in case kill Xtightserver
-    pkill Xtightvnc  >/dev/null 2>/dev/null
 else
     # Check for internet
     while true; do
@@ -49,6 +52,14 @@ else
         fi
     done
 
+    # We are going to setup the VNC server now, show hourglass while waiting for setup dialog
+    python -c "from kdesk import hourglass; hourglass.hourglass_start('kano-dialog');"
+
+    # kano-profile stat collection
+    if [ -e /usr/bin/kano-profile-cli ]; then
+	kano-profile-cli increment_app_state_variable vnc starts 1
+    fi
+
     # Ask for password
     while true; do
         PASSWORD=$(kano-dialog title="Create a password" description="Make it 6 to 8 characters long"\
@@ -61,13 +72,16 @@ else
             break;
         fi
     done
+
     # Create encrypted password file
-    echo "$PASSWORD\n$PASSWORD" | vncpasswd -f  > $PASS_FILE
+    /usr/bin/x11vnc -storepasswd $PASSWORD $PASS_FILE
+
     # Set correct permissions (-rw-------)
     chmod 0600 $PASS_FILE
+
     # Enable the server
-    vncserver -name "kano" ":1" >/dev/null 2>/dev/null
-    if [ -e $PID_FILE ]; then
+    /usr/bin/x11vnc -rfbauth $PASS_FILE -display $VNC_DISPLAY -no6 -noipv6 -dontdisconnect -forever -shared -nolookup -ungrabboth -N -bg >/dev/null 2>&1
+    if [ $? -eq 0 ]; then
         # Get Ethernet ip
         IP=`/sbin/ifconfig eth0 | grep inet | awk '{print $2}' | cut -d':' -f2`
         # Get wlan0 IP if needed
@@ -75,7 +89,7 @@ else
             IP=`/sbin/ifconfig wlan0 | grep inet | awk '{print $2}' | cut -d':' -f2`
         fi
         # Confirmation message
-        kano-dialog title="The VNC Server was enabled" description="IP is $IP:1"
+        kano-dialog title="The VNC Server was enabled" description="IP is $IP:$VNC_DISPLAY (TCP port 5900)"
         exit 0
     else
         # Error message
