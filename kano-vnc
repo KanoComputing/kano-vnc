@@ -122,7 +122,7 @@ password_prompt() {
 
         # return empty password
         eval "$1='$PASSWORD'"
-        echo -e ""
+        echo ""
         return
     else
         # Ask for password on the command line
@@ -130,15 +130,15 @@ password_prompt() {
             stty -echo
             read -p "Create a VNC password (Make it 6 to 8 characters long): " PASSWORD
             if [ ${#PASSWORD} -lt 6 ] ; then
-                echo -e "\nPassword is too short, please try again"
+                echo "\nPassword is too short, please try again"
             elif [ ${#PASSWORD} -gt 8 ]; then
-                echo -e "\nPassword is too long, please try again"
+                echo "\nPassword is too long, please try again"
             else
                 break
             fi
         done
         eval "$1='$PASSWORD'"
-        echo -e ""
+        echo ""
         stty echo
         return
     fi
