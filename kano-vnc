@@ -1,16 +1,221 @@
-#!/bin/sh
+#!/bin/bash
 
 # kano-vnc
 #
 # Copyright (C) 2014 Kano Computing Ltd.
 # License: http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
 #
-# A script for toggling the VNC server
+# A script for starting, stopping and querying the VNC server
 #
 
 VNC_PATH=~/.vnc
 PASS_FILE=~/.vnc/passwd
 VNC_DISPLAY=":0"
+
+function vnc_status {
+    # returns 1 if VNC is running, 0 if stopped
+    if [ "`pidof x11vnc`" != "" ]; then
+	return 1
+    else
+	return 0
+    fi
+}
+
+function vnc_start {
+
+    # Prompt for a password
+    vnc_password=""
+    password_prompt vnc_password
+    if [ "$vnc_password" == "" ]; then
+        # User cancelled the password input
+        return 1
+    fi
+
+    # Create encrypted password file
+    if [ ! -d $VNC_PATH ]; then
+        mkdir -p $VNC_PATH
+    fi
+
+    pwderr=`/usr/bin/x11vnc -storepasswd $vnc_password $PASS_FILE 2>&1`
+    if [ "$?" != "0" ]; then
+        echo "Error storing the vnc password"
+        echo "$pwderr"
+        return 1
+    fi
+
+    # Set correct permissions (-rw-------)
+    chmod 0600 $PASS_FILE
+
+    # Starting the VNC server now
+    if [ ${DISPLAY} ]; then
+        python -c "from kdesk import hourglass; hourglass.hourglass_start('kano-dialog');"
+    fi
+
+    /usr/bin/x11vnc -rfbauth $PASS_FILE -display $VNC_DISPLAY -no6 -noipv6 -dontdisconnect -forever -shared -nolookup -ungrabboth -N -bg >/dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        # Get Ethernet ip
+        IP=`/sbin/ifconfig eth0 | grep inet | awk '{print $2}' | cut -d':' -f2`
+
+        # Get wlan0 IP if needed
+        if [ -z $IP ]; then
+            IP=`/sbin/ifconfig wlan0 | grep inet | awk '{print $2}' | cut -d':' -f2`
+        fi
+
+        # Confirmation message
+        if [ ${DISPLAY} ]; then
+            kano-dialog title="The VNC Server was enabled" description="IP is $IP$VNC_DISPLAY (TCP port 5900)"
+        fi
+        return 0
+    else
+        # Error message
+        if [ ${DISPLAY} ]; then
+            kano-dialog title='Error!' description='Something went wrong'
+        fi
+        return 1
+    fi
+    return 0
+}
+
+function vnc_stop {
+
+    if [ ${DISPLAY} ]; then
+        # Stopping and disabling the VNC server, hourglass until we have told the user
+        python -c "from kdesk import hourglass; hourglass.hourglass_start('kano-dialog');"
+    fi
+
+    # kano-profile stat collection
+    if [ -e /usr/bin/kano-profile-cli ]; then
+        kano-profile-cli increment_app_state_variable vnc starts 1
+    fi
+
+    # Disable the server
+    pkill -9 x11vnc >/dev/null 2>&1
+    if [ ${DISPLAY} ]; then
+        kano-dialog title='The VNC Server was disabled'
+    fi
+
+    # Remove .vnc folder
+    rm -rf -- $VNC_PATH
+    return 0
+}
+
+function password_prompt {
+
+    if [ ${DISPLAY} ]; then
+        while true; do
+
+            # Ask for password using the GUI
+            python -c "from kdesk import hourglass; hourglass.hourglass_start('kano-dialog');"
+
+            PASSWORD=$(kano-dialog title="Create a VNC password" description="Make it 6 to 8 characters long"\
+                   entry=hidden button=OK,color:green button=CANCEL,color:red\
+                   global_style=True)
+            # If the user doesn't enter a password, just exit
+            if [ "$PASSWORD" = "1" ]; then
+                # return empty password
+                eval "$1=''"
+                return
+            elif [ ${#PASSWORD} -ge 6 ] && [ ${#PASSWORD} -le 8 ]; then
+                break;
+            fi
+        done
+
+        # return empty password
+        eval "$1='$PASSWORD'"
+        echo -e ""
+        return
+    else
+        # Ask for password on the command line
+        while true; do
+            read -s -p "Create a VNC password (Make it 6 to 8 characters long): " PASSWORD
+            if [ ${#PASSWORD} -lt 6 ] ; then
+                echo -e "\nPassword is too short, please try again"
+            elif [ ${#PASSWORD} -gt 8 ]; then
+                echo -e "\nPassword is too long, please try again"
+            else
+                break
+            fi
+        done
+        eval "$1='$PASSWORD'"
+        echo -e ""
+        return
+    fi
+}
+
+# Main script starts here
+command=$1
+
+if [ "$command" == "status" ]; then
+    vnc_status
+    if [ "$?" == "1" ]; then
+	echo "vnc is running"
+    else
+	echo "vnc is stopped"
+    fi
+elif [ "$command" == "start" ]; then
+    vnc_status
+    if [ "$?" == "1" ]; then
+	echo "vnc is already running"
+	exit 0
+    else
+ 	vnc_start
+	if [ "$?" == "0" ]; then
+	    echo "vnc has been started"
+	    exit 0
+	else
+	    echo "error starting the vnc server"
+	    exit 1
+	fi
+    fi
+elif [ "$command" == "stop" ]; then
+    vnc_status
+    if [ "$?" == "0" ]; then
+        echo "VNC server is already stopped"
+        exit 0
+    fi
+
+    vnc_stop
+    vnc_status
+    if [ "$?" == "1" ]; then
+	echo "error stopping the vnc server"
+	exit 1
+    else
+	echo "vnc has been stopped"
+	exit 0
+    fi
+
+elif [ "$command" == "switch" ]; then
+
+    vnc_status
+    if [ "$?" == "0" ]; then
+        echo "VNC Server is stopped, starting..."
+ 	vnc_start
+        rc=$?
+    else
+        echo "VNC Server is running, stopping..."
+ 	vnc_stop
+        rc=$?
+    fi
+    
+    if [ "$rc" == "0" ]; then
+        echo "VNC switched back successfully"
+    else
+        echo "Error switching the VNC server"
+    fi
+    exit $rc
+
+else
+    echo "kano-vnc < [status] | [start] | [stop] | [switch] >"
+    echo "   Basic VNC Server handling commands. Switch will start if stopped, or terminate if running."
+    echo "   If called from your Kano Desktop you will get GUI based dialogs, or console prompts if connected headless (ssh/tty)"
+    echo "   Return code will be 0 on success, any other value means something went wrong."
+    exit 1
+fi
+
+
+exit 0
+
+
 
 if [ ! -d "$VNC_PATH" ]; then
     mkdir $VNC_PATH
