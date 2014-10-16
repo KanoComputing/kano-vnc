@@ -206,8 +206,18 @@ elif test "$command" = "switch"; then
     fi
     exit $rc
 
+elif test "$command" = "clients"; then
+
+    # Reports list of clients connected to this Raspberry over VNC
+    vnc_clients=`netstat -nt |grep 5900| awk '{print $5}'`
+    if [ ${#vnc_clients} -gt 0 ]; then
+        echo "VNC Clients currently connected:\n$vnc_clients"
+        exit 0
+    fi
+    exit 1
+
 else
-    echo "kano-vnc < [status] | [start] | [stop] | [switch] >"
+    echo "kano-vnc < [status] | [start] | [stop] | [switch] | [clients] >"
     echo "   Basic VNC Server handling commands. Switch will start if stopped, or terminate if running."
     echo "   If called from your Kano Desktop you will get GUI based dialogs, or console prompts if connected headless (ssh/tty)"
     echo "   Return code will be 0 on success, any other value means something went wrong."
