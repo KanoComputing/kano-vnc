@@ -3,9 +3,13 @@ kano-vnc (1.1-3) unstable; urgency=low
 
   * Pre-release New Kano notification messages when remote clients connect to VNC
 
+ -- Team Kano <dev@kano.me>  Fri, Oct 17 17:04:00 2014 +0200
+
 kano-vnc (1.1-2) unstable; urgency=low
 
   * Pre-release kano-vnc now gives a command line list of management options
+
+ -- Team Kano <dev@kano.me>  Thu, Oct 16 12:26:04 2014 +0200
 
 kano-vnc (1.1-1) unstable; urgency=low
 
