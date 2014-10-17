@@ -9,9 +9,8 @@
 
 set +e
 
-VNC_PATH=$HOME/.vnc/
-VNC_PASS=$VNC_PATH/passwd
-VNC_DISPLAY=":0"
+. /usr/share/kano-vnc/vncglobals
+
 xpid=`pidof x11vnc`
 
 if [ "$xpid" != "" ]; then
@@ -25,7 +24,7 @@ else
 	pkill -9 x11vnc
 
 	# Start the VNC in daemon mode
-	/usr/bin/x11vnc -rfbauth $VNC_PASS -display $VNC_DISPLAY -no6 -noipv6 -dontdisconnect -forever -shared -nolookup -ungrabboth -N -bg >/dev/null 2>&1
+	`$VNC_CMDLINE` > /dev/null 2>&1
     fi
 fi
 

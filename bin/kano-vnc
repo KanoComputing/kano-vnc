@@ -8,9 +8,7 @@
 # A script for starting, stopping and querying the VNC server
 #
 
-VNC_PATH=~/.vnc
-PASS_FILE=~/.vnc/passwd
-VNC_DISPLAY=":0"
+. /usr/share/kano-vnc/vncglobals
 
 vnc_status() {
     # returns 1 if VNC is running, 0 if stopped
@@ -51,7 +49,7 @@ vnc_start() {
         python -c "from kdesk import hourglass; hourglass.hourglass_start('kano-dialog');"
     fi
 
-    /usr/bin/x11vnc -rfbauth $PASS_FILE -display $VNC_DISPLAY -no6 -noipv6 -dontdisconnect -forever -shared -nolookup -ungrabboth -N -bg >/dev/null 2>&1
+    $VNC_CMDLINE > /dev/null 2>&1
     if test $? = 0; then
         # Get Ethernet ip
         IP=`/sbin/ifconfig eth0 | grep inet | awk '{print $2}' | cut -d':' -f2`
