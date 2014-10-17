@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# vncglobale
+# vncglobals
 #
 # Copyright (C) 2014 Kano Computing Ltd.
 # License: http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
@@ -11,7 +11,7 @@
 VNC_PATH=~/.vnc
 PASS_FILE=~/.vnc/passwd
 VNC_DISPLAY=":0"
-SHINCOME="/usr/share/kano-vnc/vncincoming"
+SHINCOMING="/usr/share/kano-vnc/vncincoming"
 VNCAPP="/usr/bin/x11vnc"
 
-VNC_CMDLINE="$VNCAPP -rfbauth $PASS_FILE -display $VNC_DISPLAY -no6 -noipv6 -dontdisconnect -forever -shared -nolookup -ungrabboth -accept \"$SHINCOME\" -N -bg"
+VNC_CMDLINE="$VNCAPP -rfbauth $PASS_FILE -display $VNC_DISPLAY -no6 -noipv6 -dontdisconnect -forever -shared -nolookup -ungrabboth -accept \"$SHINCOMING\" -N -bg"

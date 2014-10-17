@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# startvnc
+# vncincoming
 # 
 # Copyright (C) 2014 Kano Computing Ltd.
 # License: http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
@@ -23,5 +23,5 @@ if [ -p $notification_pipe ]; then
     echo $message >> $HOME/.kano-notifications.fifo
 fi
 
-# 0 means accept the connection - see kano-vnc for meanings of these codes
+# 0 means accept the connection - see x11vnc "accept" for the meanings of these codes
 exit 0
