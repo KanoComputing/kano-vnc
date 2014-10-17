@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# startvnc
+# 
+# Copyright (C) 2014 Kano Computing Ltd.
+# License: http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+#
+# This script is executed each time a remote VNC viewer connects to the local VNC server
+# Return 0 to accept the remote client, anything different will kick him out.
+#
+
+notification_pipe="$HOME/.kano-notifications.fifo"
+remote_ip=$RFB_CLIENT_IP
+
+if [ -p $notification_pipe ]; then
+    # Prepare a Desktop notification message
+    title="VNC Connection"
+    byline="A device with IP ${remote_ip} is opening a VNC screen"
+    image="/usr/share/icons/Kano/66x66/apps/vnc.png"
+    sound="/usr/share/kano-media/sounds/kano_open_app.wav"
+    
+    message="{\"title\": \"$title\", \"byline\": \"$byline\", \"image\": \"$image\", \"sound\": \"$sound\"}"
+    echo $message >> $HOME/.kano-notifications.fifo
+fi
+
+# 0 means accept the connection - see kano-vnc for meanings of these codes
+exit 0
