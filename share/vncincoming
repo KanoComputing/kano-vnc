@@ -15,8 +15,8 @@ remote_ip=$RFB_CLIENT_IP
 if [ -p $notification_pipe ]; then
     # Prepare a Desktop notification message
     title="VNC Connection"
-    byline="A device with IP ${remote_ip} is opening a VNC screen"
-    image="/usr/share/icons/Kano/66x66/apps/vnc.png"
+    byline="IP ${remote_ip} connected"
+    image="/usr/share/kano-vnc/notification.png"
     sound="/usr/share/kano-media/sounds/kano_open_app.wav"
     
     message="{\"title\": \"$title\", \"byline\": \"$byline\", \"image\": \"$image\", \"sound\": \"$sound\"}"
