@@ -9,7 +9,7 @@
 #
 
 VNC_PATH=~/.vnc
-PASS_FILE=~/.vnc/passwd
+PASS_FILE=$VNC_PATH/passwd
 VNC_DISPLAY=":0"
 SHINCOMING="/usr/share/kano-vnc/vncincoming"
 VNCAPP="/usr/bin/x11vnc"

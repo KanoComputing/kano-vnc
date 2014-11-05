@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # startvnc
-# 
+#
 # Copyright (C) 2014 Kano Computing Ltd.
 # License: http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
 #
@@ -18,7 +18,7 @@ if [ "$xpid" != "" ]; then
     exit 1
 else
     # start vncserver
-    if [ -f $VNC_PASS ]; then
+    if [ -f $PASS_FILE ]; then
 
         # Kill
 	pkill -9 x11vnc
