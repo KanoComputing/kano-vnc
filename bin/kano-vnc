@@ -105,7 +105,7 @@ password_prompt() {
             kdesk-hourglass-app "kano-dialog"
 
             PASSWORD=$(kano-dialog title="Create a VNC password" description="Make it 6 to 8 characters long"\
-                   entry=hidden button=OK,color:green button=CANCEL,color:red\
+                   entry=hidden button=OK,color:green button=CANCEL,return_value:1,color:red\
                    global_style=True)
 
             # If the user doesn't enter a password, just exit
