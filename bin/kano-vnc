@@ -2,7 +2,7 @@
 
 # kano-vnc
 #
-# Copyright (C) 2014 Kano Computing Ltd.
+# Copyright (C) 2014, 2015 Kano Computing Ltd.
 # License: http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
 #
 # A script for starting, stopping and querying the VNC server
@@ -13,14 +13,13 @@
 vnc_status() {
     # returns 1 if VNC is running, 0 if stopped
     if [ "`pidof x11vnc`" != "" ]; then
-	return 1
+        return 1
     else
-	return 0
+        return 0
     fi
 }
 
 vnc_start() {
-
     # Prompt for a password
     vnc_password=""
     password_prompt vnc_password
@@ -33,7 +32,6 @@ vnc_start() {
     if [ ! -d $VNC_PATH ]; then
         mkdir -p $VNC_PATH
     fi
-
     pwderr=`/usr/bin/x11vnc -storepasswd $vnc_password $PASS_FILE 2>&1`
     if test $? != 0; then
         echo "Error storing the vnc password"
@@ -74,7 +72,6 @@ vnc_start() {
 }
 
 vnc_stop() {
-
     if [ ${DISPLAY} ]; then
         # Stopping and disabling the VNC server, hourglass until we have told the user
         kdesk-hourglass-app "kano-dialog"
@@ -97,10 +94,9 @@ vnc_stop() {
 }
 
 password_prompt() {
-
+    # On screen
     if [ ${DISPLAY} ]; then
         while true; do
-
             # Ask for password using the GUI
             kdesk-hourglass-app "kano-dialog"
 
@@ -117,13 +113,12 @@ password_prompt() {
                 break;
             fi
         done
-
         # return empty password
         eval "$1='$PASSWORD'"
         echo ""
         return
+    # On the command line
     else
-        # Ask for password on the command line
         while true; do
             stty -echo
             read -p "Create a VNC password (Make it 6 to 8 characters long): " PASSWORD
@@ -145,28 +140,31 @@ password_prompt() {
 # Main script starts here
 command=$1
 
+# Argument = status
 if test "$command" = "status"; then
     vnc_status
     if test $? -eq 1; then
-	echo "vnc is running"
+        echo "vnc is running"
     else
-	echo "vnc is stopped"
+        echo "vnc is stopped"
     fi
+# Argument = start
 elif test "$command" = "start"; then
     vnc_status
     if test $? -eq 1; then
-	echo "vnc is already running"
-	exit 0
+        echo "vnc is already running"
+        exit 0
     else
- 	vnc_start
-	if test $? -eq 0; then
-	    echo "vnc has been started"
-	    exit 0
-	else
-	    echo "error starting the vnc server"
-	    exit 1
-	fi
+        vnc_start
+        if test $? -eq 0; then
+            echo "vnc has been started"
+            exit 0
+        else
+            echo "error starting the vnc server"
+            exit 1
+        fi
     fi
+# Argument = stop
 elif test "$command" = "stop"; then
     vnc_status
     if test $? -eq 0; then
@@ -177,23 +175,22 @@ elif test "$command" = "stop"; then
     vnc_stop
     vnc_status
     if test $? -eq 1; then
-	echo "error stopping the vnc server"
-	exit 1
+        echo "error stopping the vnc server"
+        exit 1
     else
-	echo "vnc has been stopped"
-	exit 0
+        echo "vnc has been stopped"
+        exit 0
     fi
-
+# Argument = switch
 elif test "$command" = "switch"; then
-
     vnc_status
     if test $? -eq 0; then
         echo "VNC Server is stopped, starting..."
- 	vnc_start
+        vnc_start
         rc=$?
     else
         echo "VNC Server is running, stopping..."
- 	vnc_stop
+        vnc_stop
         rc=$?
     fi
     
@@ -203,9 +200,8 @@ elif test "$command" = "switch"; then
         echo "Error switching the VNC server"
     fi
     exit $rc
-
+# Argument = clients
 elif test "$command" = "clients"; then
-
     # Reports list of clients connected to this Raspberry over VNC
     vnc_clients=`netstat -nt |grep 5900| awk '{print $5}'`
     if [ ${#vnc_clients} -gt 0 ]; then
@@ -213,7 +209,7 @@ elif test "$command" = "clients"; then
         exit 0
     fi
     exit 1
-
+# Argument error
 else
     echo "kano-vnc < [status] | [start] | [stop] | [switch] | [clients] >"
     echo "   Basic VNC Server handling commands. Switch will start if stopped, or terminate if running."
