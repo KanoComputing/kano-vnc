@@ -111,6 +111,8 @@ password_prompt() {
                 return
             elif [ ${#PASSWORD} -ge 6 ] && [ ${#PASSWORD} -le 8 ]; then
                 break;
+            else
+                kano-dialog title="You did not enter a valid password" description="Try again"
             fi
         done
         # return empty password
@@ -193,7 +195,7 @@ elif test "$command" = "switch"; then
         vnc_stop
         rc=$?
     fi
-    
+
     if test $rc -eq 0; then
         echo "VNC switched back successfully"
     else
