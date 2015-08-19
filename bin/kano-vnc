@@ -49,17 +49,21 @@ vnc_start() {
 
     $VNC_CMDLINE > /dev/null 2>&1
     if test $? = 0; then
+	
         # Get Ethernet ip
         IP=`/sbin/ifconfig eth0 | grep inet | awk '{print $2}' | cut -d':' -f2`
 
         # Get wlan0 IP if needed
         if [ -z $IP ]; then
             IP=`/sbin/ifconfig wlan0 | grep inet | awk '{print $2}' | cut -d':' -f2`
-        fi
+        fi        # Get hostname
+        HOSTNAME=`hostname` 
 
         # Confirmation message
         if [ ${DISPLAY} ]; then
-            kano-dialog title="The VNC Server was enabled" description="IP is $IP$VNC_DISPLAY (TCP port 5900)"
+            kano-dialog title="The VNC Server was enabled" description="Hostname is $HOSTNAME.local$VNC_DISPLAY 
+IP is $IP(TCP port 5900)
+"
         fi
     else
         # Error message
