@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Exec=/usr/bin/kano-vnc switch
+Icon=vnc
+Terminal=false
+Name=Toggle VNC
+Comment=Connect remotely through VNC
+Categories=tools;
+StartupNotify=false
