@@ -2,4 +2,5 @@ bin/kano-vnc usr/bin
 share/* usr/share/kano-vnc
 
 icon/vnc.app usr/share/applications/
+icon/vnc.desktop usr/share/applications/
 icon/vnc.png usr/share/icons/Kano/66x66/apps/

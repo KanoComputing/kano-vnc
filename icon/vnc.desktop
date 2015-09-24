@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Kano VNC
+Comment=Share Kano Desktop with remote devices
+Exec=/usr/bin/kano-vnc switch
+Icon=computer
+Terminal=false
+Type=Application
+StartupNotify=false
+Categories=Network;RemoteAccess;
