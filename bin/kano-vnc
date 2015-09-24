@@ -44,7 +44,7 @@ vnc_start() {
 
     # Starting the VNC server now
     if [ ${DISPLAY} ]; then
-        kdesk-hourglass-app "kano-dialog"
+        kdesk-hourglass-app "Kano-dialog"
     fi
 
     $VNC_CMDLINE > /dev/null 2>&1
@@ -78,7 +78,7 @@ IP is $IP(TCP port 5900)
 vnc_stop() {
     if [ ${DISPLAY} ]; then
         # Stopping and disabling the VNC server, hourglass until we have told the user
-        kdesk-hourglass-app "kano-dialog"
+        kdesk-hourglass-app "Kano-dialog"
     fi
 
     # kano-profile stat collection
@@ -89,7 +89,7 @@ vnc_stop() {
     # Disable the server
     pkill -9 x11vnc >/dev/null 2>&1
     if [ ${DISPLAY} ]; then
-        kano-dialog title='The VNC Server was disabled'
+        kano-dialog title="The VNC Server was disabled"
     fi
 
     # Remove .vnc folder
@@ -102,7 +102,7 @@ password_prompt() {
     if [ ${DISPLAY} ]; then
         while true; do
             # Ask for password using the GUI
-            kdesk-hourglass-app "kano-dialog"
+            kdesk-hourglass-app "Kano-dialog"
 
             PASSWORD=$(kano-dialog title="Create a VNC password" description="Make it 6 to 8 characters long"\
                    entry=hidden button=OK,color:green button=CANCEL,return_value:1,color:red\
