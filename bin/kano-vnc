@@ -10,6 +10,9 @@
 
 . /usr/share/kano-vnc/vncglobals
 
+. gettext.sh
+export TEXTDOMAIN="make-snake"
+
 vnc_status() {
     # returns 1 if VNC is running, 0 if stopped
     if [ "`pidof x11vnc`" != "" ]; then
@@ -51,24 +54,24 @@ vnc_start() {
     if test $? = 0; then
 	
         # Get Ethernet ip
-        IP=`/sbin/ifconfig eth0 | grep inet | awk '{print $2}' | cut -d':' -f2`
+        IP=`LANG=en_US /sbin/ifconfig eth0 | grep inet | awk '{print $2}' | cut -d':' -f2`
 
         # Get wlan0 IP if needed
         if [ -z $IP ]; then
-            IP=`/sbin/ifconfig wlan0 | grep inet | awk '{print $2}' | cut -d':' -f2`
+            IP=`LANG=en_US /sbin/ifconfig wlan0 | grep inet | awk '{print $2}' | cut -d':' -f2`
         fi        # Get hostname
         HOSTNAME=`hostname` 
 
         # Confirmation message
         if [ ${DISPLAY} ]; then
-            kano-dialog title="The VNC Server was enabled" description="Hostname is $HOSTNAME.local$VNC_DISPLAY 
-IP is $IP(TCP port 5900)
-"
+            kano-dialog title="`gettext "The VNC Server was enabled"`" description="`eval_gettext "Hostname is \\\$HOSTNAME.local\\\$VNC_DISPLAY 
+IP is \\\$IP(TCP port 5900)
+"`"
         fi
     else
         # Error message
         if [ ${DISPLAY} ]; then
-            kano-dialog title='Error!' description='Something went wrong'
+            kano-dialog title="`gettext "Error!"`" description="`gettext "Something went wrong"`"
         fi
         return 1
     fi
@@ -89,7 +92,7 @@ vnc_stop() {
     # Disable the server
     pkill -9 x11vnc >/dev/null 2>&1
     if [ ${DISPLAY} ]; then
-        kano-dialog title='The VNC Server was disabled'
+        kano-dialog title="`gettext "The VNC Server was disabled"`"
     fi
 
     # Remove .vnc folder
@@ -104,7 +107,7 @@ password_prompt() {
             # Ask for password using the GUI
             kdesk-hourglass-app "kano-dialog"
 
-            PASSWORD=$(kano-dialog title="Create a VNC password" description="Make it 6 to 8 characters long"\
+            PASSWORD=$(kano-dialog title="`gettext "Create a VNC password"`" description="`gettext "Make it 6 to 8 characters long"`"\
                    entry=hidden button=OK,color:green button=CANCEL,return_value:1,color:red\
                    global_style=True)
 
@@ -116,7 +119,7 @@ password_prompt() {
             elif [ ${#PASSWORD} -ge 6 ] && [ ${#PASSWORD} -le 8 ]; then
                 break;
             else
-                kano-dialog title="You did not enter a valid password" description="Try again"
+                kano-dialog title="`gettext "You did not enter a valid password"`" description="`gettext "Try again"`"
             fi
         done
         # return empty password

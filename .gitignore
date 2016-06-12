@@ -2,3 +2,5 @@
 *.swo
 .DS_store
 *~
+*.mo
+po/messages.pot
