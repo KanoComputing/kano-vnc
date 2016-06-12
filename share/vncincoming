@@ -10,7 +10,7 @@
 #
 
 . gettext.sh
-export TEXTDOMAIN="make-snake"
+export TEXTDOMAIN="kano-vnc"
 
 notification_pipe="$HOME/.kano-notifications.fifo"
 remote_ip=$RFB_CLIENT_IP

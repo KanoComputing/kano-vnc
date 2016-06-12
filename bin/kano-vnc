@@ -11,7 +11,7 @@
 . /usr/share/kano-vnc/vncglobals
 
 . gettext.sh
-export TEXTDOMAIN="make-snake"
+export TEXTDOMAIN="kano-vnc"
 
 vnc_status() {
     # returns 1 if VNC is running, 0 if stopped

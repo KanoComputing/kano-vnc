@@ -14,4 +14,4 @@ VNC_DISPLAY=":0"
 SHINCOMING="/usr/share/kano-vnc/vncincoming"
 VNCAPP="/usr/bin/x11vnc"
 
-VNC_CMDLINE="LANG=en_US $VNCAPP -rfbauth $PASS_FILE -avahi -display $VNC_DISPLAY -no6 -noipv6 -dontdisconnect -forever -shared -nolookup -ungrabboth -accept \"$SHINCOMING\" -N -bg"
+VNC_CMDLINE="$VNCAPP -rfbauth $PASS_FILE -avahi -display $VNC_DISPLAY -no6 -noipv6 -dontdisconnect -forever -shared -nolookup -ungrabboth -accept \"$SHINCOMING\" -N -bg"
