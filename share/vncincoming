@@ -9,13 +9,16 @@
 # Return 0 to accept the remote client, anything different will kick him out.
 #
 
+. gettext.sh
+export TEXTDOMAIN="kano-vnc"
+
 notification_pipe="$HOME/.kano-notifications.fifo"
 remote_ip=$RFB_CLIENT_IP
 
 if [ -p $notification_pipe ]; then
     # Prepare a Desktop notification message
-    title="VNC Connection"
-    byline="IP ${remote_ip} connected"
+    title="`gettext "VNC Connection"`"
+    byline="`eval_gettext "IP \\\${remote_ip} connected"`"
     image="/usr/share/kano-vnc/notification.png"
     sound="/usr/share/kano-media/sounds/kano_open_app.wav"
     
