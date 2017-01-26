@@ -11,3 +11,8 @@ Depends: ${misc:Depends}, x11vnc, libkdesk-dev, kano-settings (>=2.0-3), gettext
 Suggests: kano-profile
 Description: Simple VNC server wrapper
  Allows really simple toggling of the tightvncserver.
+
+Package: kano-vnc-i18n-orig
+Architecture: all
+Description: Data for working on translations of kano-vnc
+Multi-Arch: foreign
