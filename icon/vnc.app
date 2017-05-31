@@ -10,6 +10,7 @@
 
   "packages": [],
   "dependencies": ["kano-vnc"],
+  "hidden": true,
   "launch_command": "/usr/bin/kano-vnc switch",
   "StartupNotify": "false"
 }
